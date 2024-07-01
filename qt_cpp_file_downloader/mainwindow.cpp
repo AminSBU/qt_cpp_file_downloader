@@ -37,22 +37,29 @@ void MainWindow::checkInternetAndStartDownload()
 
 void MainWindow::startDownload()
 {
+    // Get URL from textbox
     QString url = ui->downoadAdress_text->text();
+
+    // check if URL is null and empty
     if (url.isEmpty()) {
         qDebug() << "Download link is empty";
         return;
     }
 
+    // consider manager variable to check request from internet
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     QNetworkRequest request;
     request.setUrl(QUrl(url));
 
+    // get reply of manager from internet
     QNetworkReply *reply = manager->get(request);
-
+    // create dialog windows
     QProgressDialog *progressDialog = new QProgressDialog("Downloading file...", "Abort", 0, 100, this);
     progressDialog->setWindowModality(Qt::WindowModal);
 
+    // connect Progressbar to reply
     connect(reply, &QNetworkReply::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal) {
+        /* set maximum and bytesToReceive */
         progressDialog->setMaximum(bytesTotal);
         progressDialog->setValue(bytesReceived);
 
