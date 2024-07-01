@@ -16,6 +16,7 @@ public:
     ~MainWindow();
 
     void startDownload();
+    void checkInternetAndStartDownload();
 
 private:
     Ui::MainWindow *ui;

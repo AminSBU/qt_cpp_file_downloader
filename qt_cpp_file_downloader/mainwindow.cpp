@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QProgressDialog>
 #include <QTimer>
+#include <QProcess>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -14,7 +15,24 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    connect(ui->Download_Button, &QPushButton::clicked, this, &MainWindow::startDownload);
+    connect(ui->Download_Button, &QPushButton::clicked, this, &MainWindow::checkInternetAndStartDownload);
+}
+
+void MainWindow::checkInternetAndStartDownload()
+{
+    QProcess process;
+    process.start("ping", QStringList() << "google.com");
+    process.waitForFinished();
+
+    QByteArray result = process.readAllStandardOutput();
+    QString resultString = QString::fromUtf8(result);
+
+    if (resultString.contains("Reply from")) {
+        qDebug() << "Internet connection is available. Starting download...";
+        startDownload();
+    } else {
+        qDebug() << "No internet connection available.";
+    }
 }
 
 void MainWindow::startDownload()
