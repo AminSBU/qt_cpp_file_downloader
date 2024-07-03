@@ -8,6 +8,7 @@
 #include <QProgressDialog>
 #include <QTimer>
 #include <QProcess>
+#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -16,6 +17,24 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     connect(ui->Download_Button, &QPushButton::clicked, this, &MainWindow::checkInternetAndStartDownload);
+
+    connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::BrowseFileDialog);
+}
+
+void MainWindow::BrowseFileDialog()
+{
+    QString directory =
+    QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Find Files"), QDir::currentPath()));
+
+    if (!directory.isEmpty()) {
+        QDir dir(directory);
+        QStringList files = dir.entryList(QDir::Files);
+
+        foreach (const QString &file, files)
+        {
+            qDebug() << "File found: " << file;
+        }
+    }
 }
 
 void MainWindow::checkInternetAndStartDownload()

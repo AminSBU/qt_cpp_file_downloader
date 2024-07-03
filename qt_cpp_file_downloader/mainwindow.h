@@ -17,6 +17,7 @@ public:
 
     void startDownload();
     void checkInternetAndStartDownload();
+    void BrowseFileDialog();
 
 private:
     Ui::MainWindow *ui;
