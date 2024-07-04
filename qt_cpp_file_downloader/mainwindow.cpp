@@ -35,6 +35,8 @@ void MainWindow::BrowseFileDialog()
             qDebug() << "File found: " << file;
         }
     }
+
+    ui->BrowseDirectory->setText(directory);
 }
 
 void MainWindow::checkInternetAndStartDownload()
