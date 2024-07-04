@@ -10,6 +10,8 @@
 #include <QProcess>
 #include <QFileDialog>
 
+QString directory;
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -23,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::BrowseFileDialog()
 {
-    QString directory =
+    directory =
     QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Find Files"), QDir::currentPath()));
 
     if (!directory.isEmpty()) {
@@ -93,7 +95,7 @@ void MainWindow::startDownload()
     connect(reply, &QNetworkReply::finished, [=]() {
         if (reply->error() == QNetworkReply::NoError) {
             QByteArray data = reply->readAll();
-            QFile file("downloaded_file.mp3");
+            QFile file(directory + "\\" + "downloaded_file.mp3");
             if (file.open(QFile::WriteOnly)) {
                 file.write(data);
                 file.close();
@@ -109,6 +111,8 @@ void MainWindow::startDownload()
         reply->deleteLater();
         manager->deleteLater();
     });
+
+    qDebug() << directory + "downloaded_file.mp3";
 
     connect(progressDialog, &QProgressDialog::canceled, [=]() {
         reply->abort();
