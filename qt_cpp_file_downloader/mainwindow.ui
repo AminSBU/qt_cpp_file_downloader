@@ -23,6 +23,9 @@
       <height>28</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">image: url(:/new/prefix1/icon-plus-40.png);</string>
+    </property>
     <property name="text">
      <string>Download</string>
     </property>

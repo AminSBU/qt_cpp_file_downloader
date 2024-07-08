@@ -82,9 +82,17 @@ void MainWindow::startDownload()
 
     // connect Progressbar to reply
     connect(reply, &QNetworkReply::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal) {
-        /* set maximum and bytesToReceive */
-        progressDialog->setMaximum(bytesTotal);
-        progressDialog->setValue(bytesReceived);
+        qint64 kbBytesReceived = bytesReceived / 1024;
+        qint64 kbBytesTotal = bytesTotal / 1024;
+
+        progressDialog->setMaximum(kbBytesTotal);
+        progressDialog->setValue(kbBytesReceived);
+
+        // Calculate remaining kilobytes to download
+        qint64 kbBytesRemaining = kbBytesTotal - kbBytesReceived;
+
+        QString labelText = QString("Remaining: %1 KB / %2 KB").arg(kbBytesRemaining).arg(kbBytesTotal);
+        progressDialog->setLabelText(labelText);
 
         if (progressDialog->wasCanceled()) {
             reply->abort();
@@ -95,7 +103,7 @@ void MainWindow::startDownload()
     connect(reply, &QNetworkReply::finished, [=]() {
         if (reply->error() == QNetworkReply::NoError) {
             QByteArray data = reply->readAll();
-            QFile file(directory + "\\" + "downloaded_file.mp3");
+            QFile file(directory + "\\downloaded_file.mp3");
             if (file.open(QFile::WriteOnly)) {
                 file.write(data);
                 file.close();
