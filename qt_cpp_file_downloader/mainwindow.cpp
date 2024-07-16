@@ -21,6 +21,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->Download_Button, &QPushButton::clicked, this, &MainWindow::checkInternetAndStartDownload);
 
     connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::BrowseFileDialog);
+
+    connect(ui->getURL_pushButton, &QPushButton::clicked, this, &MainWindow::getURLDialog);
 }
 
 void MainWindow::BrowseFileDialog()
