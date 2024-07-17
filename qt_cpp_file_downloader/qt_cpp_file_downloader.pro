@@ -17,16 +17,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    getURL.cpp \
+    geturldialog.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
-    getURL.h \
+    geturldialog.h \
     mainwindow.h
 
 FORMS += \
-    getURL.ui \
+    geturldialog.ui \
     mainwindow.ui
 
 # Default rules for deployment.

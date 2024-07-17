@@ -25,6 +25,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->getURL_pushButton, &QPushButton::clicked, this, &MainWindow::getURLDialog);
 }
 
+void MainWindow::getURLDialog()
+{
+
+}
+
 void MainWindow::BrowseFileDialog()
 {
     directory =
