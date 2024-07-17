@@ -9,6 +9,7 @@
 #include <QTimer>
 #include <QProcess>
 #include <QFileDialog>
+#include <QInputDialog>
 
 QString directory;
 
@@ -27,7 +28,16 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::getURLDialog()
 {
+    bool ok;
+        QString url = QInputDialog::getText(this, tr("Enter URL"), tr("URL:"), QLineEdit::Normal, "", &ok);
 
+        if (ok && !url.isEmpty()) {
+            // Handle the URL input, for example:
+            qDebug() << "Entered URL:" << url;
+        } else {
+            // URL input dialog canceled or empty input
+            qDebug() << "URL input dialog canceled or empty input";
+        }
 }
 
 void MainWindow::BrowseFileDialog()
